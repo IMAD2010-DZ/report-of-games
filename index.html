@@ -7,7 +7,7 @@
     <style>
         /* التصميم العام */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-image: url('https://media.wired.com/photos/61f48f02d0e55ccbebd52d15/3:2/w_2400,h_1600,c_limit/Gear-Rant-Game-Family-Plans-1334436001.jpg');
             background-size: cover;
             background-position: center;
@@ -20,73 +20,94 @@
 
         h1 {
             color: #fff;
-            font-size: 2rem;
-            margin-bottom: 20px;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            font-weight: 700;
         }
 
         .game-types {
-            background-color: rgba(255, 255, 255, 0.9); /* خلفية شبه شفافة */
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            background-color: rgba(255, 255, 255, 0.95); /* خلفية شبه شفافة */
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
             margin: 20px auto;
-            padding: 20px;
+            padding: 30px;
             max-width: 90%;
             color: #333;
+            backdrop-filter: blur(10px);
         }
 
         .game-types h2 {
             color: #e74c3c;
             border-bottom: 2px solid #e74c3c;
-            padding-bottom: 10px;
-            font-size: 1.5rem;
+            padding-bottom: 15px;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
         }
 
         .game-types label {
             display: block;
-            margin: 15px 0;
-            font-size: 1.1rem;
+            margin: 20px 0;
+            font-size: 1.2rem;
             text-align: right;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .game-types label:hover {
+            color: #e74c3c;
         }
 
         .game-types input[type="checkbox"] {
-            margin-left: 10px;
+            margin-left: 15px;
+            transform: scale(1.2);
+            cursor: pointer;
         }
 
         .vote-section {
             text-align: center;
-            margin-top: 30px;
+            margin-top: 40px;
         }
 
         .vote-section button {
-            padding: 12px 24px;
-            font-size: 1.1rem;
+            padding: 15px 30px;
+            font-size: 1.2rem;
             background-color: #3498db;
             color: #fff;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .vote-section button:hover {
             background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .vote-section button:active {
+            transform: translateY(0);
         }
 
         .stats {
-            margin-top: 30px;
-            font-size: 1.1rem;
+            margin-top: 40px;
+            font-size: 1.2rem;
             text-align: center;
-            background-color: rgba(255, 255, 255, 0.9); /* خلفية شبه شفافة */
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            background-color: rgba(255, 255, 255, 0.95); /* خلفية شبه شفافة */
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
             color: #333;
+            backdrop-filter: blur(10px);
         }
 
         .stats h2 {
             color: #2c3e50;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
         }
 
         .stats ul {
@@ -95,22 +116,31 @@
         }
 
         .stats ul li {
-            margin: 10px 0;
-            font-size: 1rem;
+            margin: 15px 0;
+            font-size: 1.1rem;
+            padding: 10px;
+            background-color: rgba(236, 240, 241, 0.8);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .stats ul li:hover {
+            transform: translateX(10px);
         }
 
         /* تصميم للهواتف المحمولة */
         @media (max-width: 600px) {
             h1 {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
 
             .game-types {
-                padding: 15px;
+                padding: 20px;
             }
 
             .game-types h2 {
-                font-size: 1.3rem;
+                font-size: 1.5rem;
             }
 
             .game-types label {
@@ -119,15 +149,15 @@
 
             .vote-section button {
                 font-size: 1rem;
-                padding: 10px 20px;
+                padding: 12px 24px;
             }
 
             .stats h2 {
-                font-size: 1.3rem;
+                font-size: 1.5rem;
             }
 
             .stats ul li {
-                font-size: 0.9rem;
+                font-size: 1rem;
             }
         }
     </style>
