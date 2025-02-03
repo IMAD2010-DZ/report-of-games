@@ -182,11 +182,10 @@
         <ul id="votesList"></ul>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script>
-        // تهيئة البيانات إذا لم تكن موجودة
-        if (!localStorage.getItem('votes')) {
-            localStorage.setItem('votes', JSON.stringify({}));
-        }
+        // تهيئة EmailJS
+        emailjs.init('OwLZ2UfdXzNww7TZ0'); // استبدل بمفتاحك العام من EmailJS
 
         function submitVote() {
             const selectedTypes = [];
@@ -199,23 +198,26 @@
                 return;
             }
 
-            const votes = JSON.parse(localStorage.getItem('votes'));
+            const email = prompt("أدخل بريدك الإلكتروني (اختياري):") || 'لا يوجد بريد إلكتروني';
 
-            selectedTypes.forEach(type => {
-                if (votes[type]) {
-                    votes[type] += 1;
-                } else {
-                    votes[type] = 1;
-                }
-            });
+            const data = {
+                types: selectedTypes.join(', '),
+                email: email
+            };
 
-            localStorage.setItem('votes', JSON.stringify(votes));
-            alert('تم إرسال تصويتك بنجاح!');
-            loadStats(); // تحديث الإحصائيات بعد التصويت
+            // إرسال البريد الإلكتروني
+            emailjs.send('service_510z8mi', 'template_w6nqs2k', data) // استبدل بمعرف الخدمة والقالب
+                .then(() => {
+                    alert('تم إرسال تصويتك بنجاح!');
+                    loadStats(); // تحديث الإحصائيات بعد التصويت
+                }, (error) => {
+                    console.error('Error:', error);
+                    alert('حدث خطأ أثناء الإرسال. الرجاء المحاولة مرة أخرى.');
+                });
         }
 
         function loadStats() {
-            const votes = JSON.parse(localStorage.getItem('votes'));
+            const votes = JSON.parse(localStorage.getItem('votes')) || {};
             const totalVotes = Object.values(votes).reduce((sum, count) => sum + count, 0);
 
             document.getElementById('totalVotes').textContent = `إجمالي الأصوات: ${totalVotes}`;
