@@ -1,58 +1,134 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>اختر نوع اللعبة المفضل لديك</title>
     <style>
+        /* التصميم العام */
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
+            background-image: url('https://media.wired.com/photos/61f48f02d0e55ccbebd52d15/3:2/w_2400,h_1600,c_limit/Gear-Rant-Game-Family-Plans-1334436001.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #fff;
             padding: 20px;
-        }
-        h1 {
+            margin: 0;
             text-align: center;
-            color: #2c3e50;
         }
+
+        h1 {
+            color: #fff;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
         .game-types {
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.9); /* خلفية شبه شفافة */
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             margin: 20px auto;
             padding: 20px;
-            max-width: 800px;
+            max-width: 90%;
+            color: #333;
         }
+
         .game-types h2 {
             color: #e74c3c;
             border-bottom: 2px solid #e74c3c;
             padding-bottom: 10px;
+            font-size: 1.5rem;
         }
+
         .game-types label {
             display: block;
-            margin: 10px 0;
-            font-size: 18px;
+            margin: 15px 0;
+            font-size: 1.1rem;
+            text-align: right;
         }
+
+        .game-types input[type="checkbox"] {
+            margin-left: 10px;
+        }
+
         .vote-section {
             text-align: center;
             margin-top: 30px;
         }
+
         .vote-section button {
-            padding: 10px 20px;
-            font-size: 18px;
+            padding: 12px 24px;
+            font-size: 1.1rem;
             background-color: #3498db;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
+
         .vote-section button:hover {
             background-color: #2980b9;
         }
+
         .stats {
             margin-top: 30px;
-            font-size: 18px;
+            font-size: 1.1rem;
             text-align: center;
+            background-color: rgba(255, 255, 255, 0.9); /* خلفية شبه شفافة */
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            color: #333;
+        }
+
+        .stats h2 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+        }
+
+        .stats ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .stats ul li {
+            margin: 10px 0;
+            font-size: 1rem;
+        }
+
+        /* تصميم للهواتف المحمولة */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .game-types {
+                padding: 15px;
+            }
+
+            .game-types h2 {
+                font-size: 1.3rem;
+            }
+
+            .game-types label {
+                font-size: 1rem;
+            }
+
+            .vote-section button {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+
+            .stats h2 {
+                font-size: 1.3rem;
+            }
+
+            .stats ul li {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -63,34 +139,34 @@
     <div class="game-types">
         <h2>اختر نوع اللعبة:</h2>
         <label>
-            <input type="checkbox" name="gameType" value="Action"> Action (أكشن)
+            <input type="checkbox" name="gameType" value="Action"> أكشن (Action)
         </label>
         <label>
-            <input type="checkbox" name="gameType" value="RPG"> RPG (ألعاب أدوار)
+            <input type="checkbox" name="gameType" value="RPG"> ألعاب أدوار (RPG)
         </label>
         <label>
-            <input type="checkbox" name="gameType" value="Shooter"> Shooter (ألعاب تصويب)
+            <input type="checkbox" name="gameType" value="Shooter"> ألعاب تصويب (Shooter)
         </label>
         <label>
-            <input type="checkbox" name="gameType" value="Open World"> Open World (عالم مفتوح)
+            <input type="checkbox" name="gameType" value="Open World"> عالم مفتوح (Open World)
         </label>
         <label>
-            <input type="checkbox" name="gameType" value="Story-Driven"> Story-Driven (ألعاب تعتمد على القصة)
+            <input type="checkbox" name="gameType" value="Story-Driven"> ألعاب تعتمد على القصة (Story-Driven)
         </label>
         <label>
-            <input type="checkbox" name="gameType" value="MMORPG"> MMORPG (ألعاب أدوار متعددة اللاعبين)
+            <input type="checkbox" name="gameType" value="MMORPG"> ألعاب أدوار متعددة اللاعبين (MMORPG)
         </label>
         <label>
-            <input type="checkbox" name="gameType" value="Indie"> Indie Games (ألعاب مستقلة)
+            <input type="checkbox" name="gameType" value="Indie"> ألعاب مستقلة (Indie Games)
         </label>
         <label>
-            <input type="checkbox" name="gameType" value="Survival"> Survival (ألعاب بقاء)
+            <input type="checkbox" name="gameType" value="Survival"> ألعاب بقاء (Survival)
         </label>
         <label>
-            <input type="checkbox" name="gameType" value="Horror"> Horror (ألعاب رعب)
+            <input type="checkbox" name="gameType" value="Horror"> ألعاب رعب (Horror)
         </label>
         <label>
-            <input type="checkbox" name="gameType" value="Sports"> Sports (ألعاب رياضية)
+            <input type="checkbox" name="gameType" value="Sports"> ألعاب رياضية (Sports)
         </label>
     </div>
 
@@ -107,43 +183,51 @@
     </div>
 
     <script>
-        function submitVote() {
-            const selectedTypes = [];
-            document.querySelectorAll('input[name="gameType"]:checked').forEach(checkbox => {
-                selectedTypes.push(checkbox.value);
-            });
+        async function submitVote() {
+            try {
+                const selectedTypes = [];
+                document.querySelectorAll('input[name="gameType"]:checked').forEach(checkbox => {
+                    selectedTypes.push(checkbox.value);
+                });
 
-            if (selectedTypes.length === 0) {
-                alert('الرجاء اختيار نوع واحد على الأقل.');
-                return;
-            }
+                if (selectedTypes.length === 0) {
+                    alert('الرجاء اختيار نوع واحد على الأقل.');
+                    return;
+                }
 
-            const email = prompt("أدخل بريدك الإلكتروني (اختياري):") || 'لا يوجد بريد إلكتروني';
+                const email = prompt("أدخل بريدك الإلكتروني (اختياري):") || 'لا يوجد بريد إلكتروني';
 
-            const data = {
-                types: selectedTypes,
-                email: email
-            };
+                const data = {
+                    types: selectedTypes,
+                    email: email
+                };
 
-            fetch('https://script.google.com/macros/s/AKfycbwOb_-cerePQEEEYAmFiVaR-_SXYusP0elTrTQi_fACEhx-PqDhq1PXax1QcJv4oKWY/exec', {
-                method: 'POST',
-                body: JSON.stringify(data)
-            })
-            .then(response => response.text())
-            .then(result => {
+                const response = await fetch('https://script.google.com/macros/s/AKfycbwOb_-cerePQEEEYAmFiVaR-_SXYusP0elTrTQi_fACEhx-PqDhq1PXax1QcJv4oKWY/exec', {
+                    method: 'POST',
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) {
+                    throw new Error('حدث خطأ أثناء الإرسال.');
+                }
+
+                const result = await response.text();
                 alert('تم إرسال تصويتك بنجاح!');
                 loadStats(); // تحديث الإحصائيات بعد التصويت
-            })
-            .catch(error => {
+            } catch (error) {
                 console.error('Error:', error);
-                alert('حدث خطأ أثناء الإرسال.');
-            });
+                alert('حدث خطأ أثناء الإرسال. الرجاء المحاولة مرة أخرى.');
+            }
         }
 
-        function loadStats() {
-            fetch('https://script.google.com/macros/s/AKfycbwOb_-cerePQEEEYAmFiVaR-_SXYusP0elTrTQi_fACEhx-PqDhq1PXax1QcJv4oKWY/exec')
-            .then(response => response.json())
-            .then(data => {
+        async function loadStats() {
+            try {
+                const response = await fetch('https://script.google.com/macros/s/AKfycbwOb_-cerePQEEEYAmFiVaR-_SXYusP0elTrTQi_fACEhx-PqDhq1PXax1QcJv4oKWY/exec');
+                if (!response.ok) {
+                    throw new Error('حدث خطأ أثناء تحميل الإحصائيات.');
+                }
+
+                const data = await response.json();
                 document.getElementById('totalVotes').textContent = `إجمالي الأصوات: ${data.totalVotes}`;
                 const votesList = document.getElementById('votesList');
                 votesList.innerHTML = '';
@@ -152,10 +236,10 @@
                     li.textContent = `${type}: ${count} صوت (${((count / data.totalVotes) * 100).toFixed(2)}%)`;
                     votesList.appendChild(li);
                 }
-            })
-            .catch(error => {
+            } catch (error) {
                 console.error('Error:', error);
-            });
+                alert('حدث خطأ أثناء تحميل الإحصائيات.');
+            }
         }
 
         // تحميل الإحصائيات عند فتح الصفحة
