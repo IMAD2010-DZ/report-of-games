@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختر نوع اللعبة المفضل لديك</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .game-types {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 800px;
+        }
+        .game-types h2 {
+            color: #e74c3c;
+            border-bottom: 2px solid #e74c3c;
+            padding-bottom: 10px;
+        }
+        .game-types label {
+            display: block;
+            margin: 10px 0;
+            font-size: 18px;
+        }
+        .vote-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .vote-section button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .vote-section button:hover {
+            background-color: #2980b9;
+        }
+        .stats {
+            margin-top: 30px;
+            font-size: 18px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>اختر نوع اللعبة المفضل لديك</h1>
+
+    <!-- أنواع الألعاب -->
+    <div class="game-types">
+        <h2>اختر نوع اللعبة:</h2>
+        <label>
+            <input type="checkbox" name="gameType" value="Action"> Action (أكشن)
+        </label>
+        <label>
+            <input type="checkbox" name="gameType" value="RPG"> RPG (ألعاب أدوار)
+        </label>
+        <label>
+            <input type="checkbox" name="gameType" value="Shooter"> Shooter (ألعاب تصويب)
+        </label>
+        <label>
+            <input type="checkbox" name="gameType" value="Open World"> Open World (عالم مفتوح)
+        </label>
+        <label>
+            <input type="checkbox" name="gameType" value="Story-Driven"> Story-Driven (ألعاب تعتمد على القصة)
+        </label>
+        <label>
+            <input type="checkbox" name="gameType" value="MMORPG"> MMORPG (ألعاب أدوار متعددة اللاعبين)
+        </label>
+        <label>
+            <input type="checkbox" name="gameType" value="Indie"> Indie Games (ألعاب مستقلة)
+        </label>
+        <label>
+            <input type="checkbox" name="gameType" value="Survival"> Survival (ألعاب بقاء)
+        </label>
+        <label>
+            <input type="checkbox" name="gameType" value="Horror"> Horror (ألعاب رعب)
+        </label>
+        <label>
+            <input type="checkbox" name="gameType" value="Sports"> Sports (ألعاب رياضية)
+        </label>
+    </div>
+
+    <!-- قسم التصويت -->
+    <div class="vote-section">
+        <button onclick="submitVote()">تم</button>
+    </div>
+
+    <!-- قسم الإحصائيات -->
+    <div class="stats">
+        <h2>الإحصائيات</h2>
+        <p id="totalVotes">إجمالي الأصوات: 0</p>
+        <ul id="votesList"></ul>
+    </div>
+
+    <script>
+        function submitVote() {
+            const selectedTypes = [];
+            document.querySelectorAll('input[name="gameType"]:checked').forEach(checkbox => {
+                selectedTypes.push(checkbox.value);
+            });
+
+            if (selectedTypes.length === 0) {
+                alert('الرجاء اختيار نوع واحد على الأقل.');
+                return;
+            }
+
+            const email = prompt("أدخل بريدك الإلكتروني (اختياري):") || 'لا يوجد بريد إلكتروني';
+
+            const data = {
+                types: selectedTypes,
+                email: email
+            };
+
+            fetch('https://script.google.com/macros/s/AKfycbwOb_-cerePQEEEYAmFiVaR-_SXYusP0elTrTQi_fACEhx-PqDhq1PXax1QcJv4oKWY/exec', {
+                method: 'POST',
+                body: JSON.stringify(data)
+            })
+            .then(response => response.text())
+            .then(result => {
+                alert('تم إرسال تصويتك بنجاح!');
+                loadStats(); // تحديث الإحصائيات بعد التصويت
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('حدث خطأ أثناء الإرسال.');
+            });
+        }
+
+        function loadStats() {
+            fetch('https://script.google.com/macros/s/AKfycbwOb_-cerePQEEEYAmFiVaR-_SXYusP0elTrTQi_fACEhx-PqDhq1PXax1QcJv4oKWY/exec')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('totalVotes').textContent = `إجمالي الأصوات: ${data.totalVotes}`;
+                const votesList = document.getElementById('votesList');
+                votesList.innerHTML = '';
+                for (const [type, count] of Object.entries(data.types)) {
+                    const li = document.createElement('li');
+                    li.textContent = `${type}: ${count} صوت (${((count / data.totalVotes) * 100).toFixed(2)}%)`;
+                    votesList.appendChild(li);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        // تحميل الإحصائيات عند فتح الصفحة
+        window.onload = loadStats;
+    </script>
+</body>
+</html>
