@@ -183,62 +183,49 @@
     </div>
 
     <script>
-        async function submitVote() {
-            try {
-                const selectedTypes = [];
-                document.querySelectorAll('input[name="gameType"]:checked').forEach(checkbox => {
-                    selectedTypes.push(checkbox.value);
-                });
-
-                if (selectedTypes.length === 0) {
-                    alert('الرجاء اختيار نوع واحد على الأقل.');
-                    return;
-                }
-
-                const email = prompt("أدخل بريدك الإلكتروني (اختياري):") || 'لا يوجد بريد إلكتروني';
-
-                const data = {
-                    types: selectedTypes,
-                    email: email
-                };
-
-                const response = await fetch('https://script.google.com/macros/s/AKfycbwOb_-cerePQEEEYAmFiVaR-_SXYusP0elTrTQi_fACEhx-PqDhq1PXax1QcJv4oKWY/exec', {
-                    method: 'POST',
-                    body: JSON.stringify(data)
-                });
-
-                if (!response.ok) {
-                    throw new Error('حدث خطأ أثناء الإرسال.');
-                }
-
-                const result = await response.text();
-                alert('تم إرسال تصويتك بنجاح!');
-                loadStats(); // تحديث الإحصائيات بعد التصويت
-            } catch (error) {
-                console.error('Error:', error);
-                alert('حدث خطأ أثناء الإرسال. الرجاء المحاولة مرة أخرى.');
-            }
+        // تهيئة البيانات إذا لم تكن موجودة
+        if (!localStorage.getItem('votes')) {
+            localStorage.setItem('votes', JSON.stringify({}));
         }
 
-        async function loadStats() {
-            try {
-                const response = await fetch('https://script.google.com/macros/s/AKfycbwOb_-cerePQEEEYAmFiVaR-_SXYusP0elTrTQi_fACEhx-PqDhq1PXax1QcJv4oKWY/exec');
-                if (!response.ok) {
-                    throw new Error('حدث خطأ أثناء تحميل الإحصائيات.');
-                }
+        function submitVote() {
+            const selectedTypes = [];
+            document.querySelectorAll('input[name="gameType"]:checked').forEach(checkbox => {
+                selectedTypes.push(checkbox.value);
+            });
 
-                const data = await response.json();
-                document.getElementById('totalVotes').textContent = `إجمالي الأصوات: ${data.totalVotes}`;
-                const votesList = document.getElementById('votesList');
-                votesList.innerHTML = '';
-                for (const [type, count] of Object.entries(data.types)) {
-                    const li = document.createElement('li');
-                    li.textContent = `${type}: ${count} صوت (${((count / data.totalVotes) * 100).toFixed(2)}%)`;
-                    votesList.appendChild(li);
+            if (selectedTypes.length === 0) {
+                alert('الرجاء اختيار نوع واحد على الأقل.');
+                return;
+            }
+
+            const votes = JSON.parse(localStorage.getItem('votes'));
+
+            selectedTypes.forEach(type => {
+                if (votes[type]) {
+                    votes[type] += 1;
+                } else {
+                    votes[type] = 1;
                 }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('حدث خطأ أثناء تحميل الإحصائيات.');
+            });
+
+            localStorage.setItem('votes', JSON.stringify(votes));
+            alert('تم إرسال تصويتك بنجاح!');
+            loadStats(); // تحديث الإحصائيات بعد التصويت
+        }
+
+        function loadStats() {
+            const votes = JSON.parse(localStorage.getItem('votes'));
+            const totalVotes = Object.values(votes).reduce((sum, count) => sum + count, 0);
+
+            document.getElementById('totalVotes').textContent = `إجمالي الأصوات: ${totalVotes}`;
+            const votesList = document.getElementById('votesList');
+            votesList.innerHTML = '';
+
+            for (const [type, count] of Object.entries(votes)) {
+                const li = document.createElement('li');
+                li.textContent = `${type}: ${count} صوت (${((count / totalVotes) * 100).toFixed(2)}%)`;
+                votesList.appendChild(li);
             }
         }
 
